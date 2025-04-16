@@ -58,33 +58,53 @@ class MyHomePage extends StatelessWidget {
     var appState = context.watch<MyAppState>();
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('A random idea:'),
-            Text(appState.current.asLowerCase),
-            SizedBox(height: 20),
-            Text('Enter your thoughts:'),
-            TextField(
-              maxLines: null, // Allows for multi-line input
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Type something here...',
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/eclipse.jpg'), // 배경 이미지 경로
+            fit: BoxFit.cover, // 이미지를 화면에 맞게 조정
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'A random idea:',
+                style: TextStyle(color: Colors.white), // 텍스트 색상 변경
               ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final text = _controller.text;
-                if (text.isNotEmpty) {
-                  _sendDataToServer(text); // 서버로 데이터 전송
-                }
-              },
-              child: Text('Submit'),
-            ),
-          ],
+              Text(
+                appState.current.asLowerCase,
+                style: TextStyle(color: Colors.white), // 텍스트 색상 변경
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Enter your thoughts:',
+                style: TextStyle(color: Colors.white), // 텍스트 색상 변경
+              ),
+              TextField(
+                controller: _controller, // Controller 연결
+                maxLines: null, // Allows for multi-line input
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Type something here...',
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.8), // 입력 필드 배경 투명도 조정
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  final text = _controller.text;
+                  if (text.isNotEmpty) {
+                    _sendDataToServer(text); // 서버로 데이터 전송
+                  }
+                },
+                child: Text('Submit'),
+              ),
+            ],
+          ),
         ),
       ),
     );
