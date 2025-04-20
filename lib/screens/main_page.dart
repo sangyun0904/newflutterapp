@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../widgets/poll_card.dart';
 import 'detail_page.dart';
+import 'create_poll_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -44,7 +45,10 @@ class MainPage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              // Add new poll action
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CreatePollPage()),
+              );
             },
           ),
         ],
