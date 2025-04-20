@@ -8,44 +8,30 @@ class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
   Future<List<dynamic>> fetchPolls() async {
-    return [
-      {
-        "category": "Entertainment",
-        "timeAgo": "3h ago",
-        "question": "Best movie of the year?",
-        "options": ["Inception", "Oppenheimer"],
-        "votes": 1200,
-      },
-      {
-        "category": "Food",
-        "timeAgo": "5h ago",
-        "question": "What’s the ultimate comfort food?",
-        "options": ["Pizza", "Burgers", "Pasta"],
-        "votes": 980,
-      },
-      {
-        "category": "Travel",
-        "timeAgo": "12h ago",
-        "question": "Which city should I visit?",
-        "options": ["Tokyo", "New York"],
-        "votes": 754,
-      },
-      {
-        "category": "Lifestyle",
-        "timeAgo": "1d ago",
-        "question": "How do you prefer to exercise?",
-        "options": ["Gym", "Running", "Yoga"],
-        "votes": 2100,
-      },
-    ];
-    // const String url = 'https://your-api-endpoint.com/polls'; // API URL
-    // final response = await http.get(Uri.parse(url));
+    const String url = 'http://localhost:8080/vote'; // API URL
+    final response = await http.get(Uri.parse(url));
 
-    // if (response.statusCode == 200) {
-    //   return json.decode(response.body); // JSON 데이터를 파싱하여 반환
-    // } else {
-    //   throw Exception('Failed to load polls');
-    // }
+    if (response.statusCode == 200) {
+      return json.decode(response.body); // JSON 데이터를 파싱하여 반환
+    } else {
+      // throw Exception('Failed to load polls');
+      return [
+        {
+          "category": "Entertainment",
+          "timeAgo": "3h ago",
+          "question": "Best movie of the year?",
+          "options": ["Inception", "Oppenheimer"],
+          "votes": 1200,
+        },
+        {
+          "category": "Food",
+          "timeAgo": "5h ago",
+          "question": "What’s the ultimate comfort food?",
+          "options": ["Pizza", "Burgers", "Pasta"],
+          "votes": 980,
+        },
+      ];
+    }
   }
 
   @override
