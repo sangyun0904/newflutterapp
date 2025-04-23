@@ -4,15 +4,22 @@ import 'dart:convert';
 import '../widgets/poll_card.dart';
 import 'detail_page.dart';
 import 'create_poll_page.dart';
+import 'login_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
   Future<List<dynamic>> fetchPolls() async {
     const String url = 'http://localhost:8080/vote'; // API URL
-    final response = await http.get(Uri.parse(url));
 
-    if (response.statusCode == 200) {
+    http.Response? response;
+    try {
+      response = await http.get(Uri.parse(url));
+    } catch (e) {
+      print('Error fetiching pools: $e');
+    }
+
+    if (response != null && response.statusCode == 200) {
       return json.decode(response.body); // JSON 데이터를 파싱하여 반환
     } else {
       // throw Exception('Failed to load polls');
@@ -48,6 +55,16 @@ class MainPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const CreatePollPage()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout), // 로그아웃 아이콘
+            onPressed: () {
+              // 로그아웃 시 로그인 페이지로 이동
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
               );
             },
           ),
